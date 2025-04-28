@@ -288,6 +288,7 @@ const MediaSourceSelector: React.FC = () => {
           <Button 
             onClick={handleCaptureScreen}
             disabled={isLoading}
+            data-testid="capture-screen-button"
           >
             {isLoading ? 'Setting up...' : 'Capture Screen'}
           </Button>
