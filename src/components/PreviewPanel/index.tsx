@@ -133,10 +133,27 @@ const PreviewPanel: React.FC = () => {
     const screenStream = state.mediaState.streams.screen;
     
     if (screenRef.current && screenStream) {
+      // Set srcObject and handle play with proper AbortError handling
       screenRef.current.srcObject = screenStream;
-      screenRef.current.play().catch(error => {
-        console.error('Error playing screen preview:', error);
-      });
+      
+      // Use a timeout to avoid race conditions with rapid state changes
+      const playTimeout = setTimeout(() => {
+        if (screenRef.current && screenRef.current.srcObject === screenStream) {
+          screenRef.current.play().catch(error => {
+            // Specific handling for AbortError which is normal during rapid changes
+            if (error.name !== 'AbortError') {
+              console.error('Error playing screen preview:', error);
+            }
+          });
+        }
+      }, 100);
+      
+      return () => {
+        clearTimeout(playTimeout);
+        if (screenRef.current) {
+          screenRef.current.srcObject = null;
+        }
+      };
     }
     
     return () => {
@@ -151,10 +168,27 @@ const PreviewPanel: React.FC = () => {
     const webcamStream = state.mediaState.streams.webcam;
     
     if (webcamRef.current && webcamStream) {
+      // Set srcObject and handle play with proper AbortError handling
       webcamRef.current.srcObject = webcamStream;
-      webcamRef.current.play().catch(error => {
-        console.error('Error playing webcam preview:', error);
-      });
+      
+      // Use a timeout to avoid race conditions with rapid state changes
+      const playTimeout = setTimeout(() => {
+        if (webcamRef.current && webcamRef.current.srcObject === webcamStream) {
+          webcamRef.current.play().catch(error => {
+            // Specific handling for AbortError which is normal during rapid changes
+            if (error.name !== 'AbortError') {
+              console.error('Error playing webcam preview:', error);
+            }
+          });
+        }
+      }, 100);
+      
+      return () => {
+        clearTimeout(playTimeout);
+        if (webcamRef.current) {
+          webcamRef.current.srcObject = null;
+        }
+      };
     }
     
     return () => {

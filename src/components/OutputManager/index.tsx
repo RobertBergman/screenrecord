@@ -134,19 +134,61 @@ const OutputManager: React.FC = () => {
   // Set up video preview
   useEffect(() => {
     const url = state.outputState.downloadUrl;
+    const outputBlob = state.outputState.output;
     
-    if (videoRef.current && url) {
+    if (videoRef.current && url && outputBlob) {
+      console.log('Setting up video preview with', {
+        url,
+        type: outputBlob.type,
+        size: outputBlob.size
+      });
+      
+      // First, pause any existing playback
+      if (!videoRef.current.paused) {
+        videoRef.current.pause();
+      }
+      
+      // Set src and load
       videoRef.current.src = url;
       videoRef.current.load();
+      
+      // Wait a bit to ensure video has loaded before trying to play
+      const playTimeout = setTimeout(() => {
+        if (videoRef.current) {
+          videoRef.current.play().catch(error => {
+            // AbortError is expected during rapid changes
+            if (error.name !== 'AbortError') {
+              console.error('Error playing recording preview:', error);
+              
+              // If there's a not supported error, try a different approach
+              if (error.name === 'NotSupportedError') {
+                console.log('Attempting alternative playback method...');
+                
+                // Create a new object URL - the original one might be corrupted
+                const newUrl = URL.createObjectURL(outputBlob);
+                
+                // Update state with the new URL
+                dispatch({
+                  type: 'SET_DOWNLOAD_URL',
+                  url: newUrl
+                });
+              }
+            }
+          });
+        }
+      }, 300);
+      
+      return () => {
+        clearTimeout(playTimeout);
+      };
     }
     
     // Clean up on unmount
     return () => {
-      if (state.outputState.downloadUrl) {
-        URL.revokeObjectURL(state.outputState.downloadUrl);
-      }
+      // Don't revoke URLs here as it might be needed for download
+      // URLs will be properly revoked in the RESET_OUTPUT_STATE reducer
     };
-  }, [state.outputState.downloadUrl]);
+  }, [state.outputState.downloadUrl, state.outputState.output, dispatch]);
   
   // Handler for format change
   const handleFormatChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

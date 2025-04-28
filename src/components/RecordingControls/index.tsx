@@ -350,6 +350,16 @@ const RecordingControls: React.FC = () => {
       });
       
       stopTimer();
+      
+      // Show processing message to user
+      console.log('Processing recording... Please wait.');
+      
+      // If after 5 seconds we're still in processing state, something might be wrong
+      setTimeout(() => {
+        if (state.recordingState.status === 'processing') {
+          console.log('Recording is taking longer than expected to process...');
+        }
+      }, 5000);
     } else {
       setError('Failed to stop recording. Please try again.');
     }

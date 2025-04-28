@@ -332,6 +332,11 @@ const appReducer = (state: AppState, action: ActionType): AppState => {
       };
       
     case 'RESET_OUTPUT_STATE':
+      // Revoke any existing object URL to prevent memory leaks
+      if (state.outputState.downloadUrl) {
+        URL.revokeObjectURL(state.outputState.downloadUrl);
+      }
+      
       return {
         ...state,
         outputState: initialOutputState,

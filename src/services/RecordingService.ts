@@ -208,15 +208,31 @@ export class RecordingService {
    */
   getRecordingBlob(type?: string): Blob | null {
     if (this.recordedChunks.length === 0) {
+      console.warn('No recorded chunks available to create blob');
       return null;
     }
+    
+    // Log information about chunks for debugging
+    console.log(`Creating blob from ${this.recordedChunks.length} chunks`);
+    console.log(`First chunk type: ${this.recordedChunks[0].type}, size: ${this.recordedChunks[0].size}`);
     
     // Use the first chunk's type if not specified
     if (!type && this.recordedChunks.length > 0) {
       type = this.recordedChunks[0].type;
     }
     
-    return new Blob(this.recordedChunks, { type });
+    // Ensure we have a valid MIME type - defaulting to WebM with VP8/Opus if needed
+    if (!type || type === '') {
+      type = 'video/webm;codecs=vp8,opus';
+    }
+    
+    console.log(`Creating final blob with MIME type: ${type}`);
+    
+    // Create the blob with explicit type
+    const finalBlob = new Blob(this.recordedChunks, { type });
+    console.log(`Final blob created - size: ${finalBlob.size}, type: ${finalBlob.type}`);
+    
+    return finalBlob;
   }
   
   /**
@@ -289,11 +305,16 @@ export class RecordingService {
    * Handles the stop event from MediaRecorder
    */
   private handleStop(): void {
-    const finalBlob = this.getRecordingBlob();
-    
-    if (finalBlob && this.onRecordingComplete) {
-      this.onRecordingComplete(finalBlob);
-    }
+    // Wait a short time to ensure all chunks are processed
+    setTimeout(() => {
+      const finalBlob = this.getRecordingBlob();
+      
+      if (finalBlob && this.onRecordingComplete) {
+        this.onRecordingComplete(finalBlob);
+      } else if (this.onError) {
+        this.onError(new Error('Failed to create final recording blob'));
+      }
+    }, 100);
   }
   
   /**
