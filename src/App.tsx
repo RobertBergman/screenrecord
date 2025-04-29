@@ -6,6 +6,7 @@ import MediaSourceSelector from './components/MediaSourceSelector';
 import PreviewPanel from './components/PreviewPanel';
 import RecordingControls from './components/RecordingControls';
 import OutputManager from './components/OutputManager';
+import SlideModule from './components/SlideModule';
 import { checkAppCompatibility } from './utils/featureDetection';
 
 // Styled components
@@ -424,6 +425,8 @@ const AppContent: React.FC = () => {
         return <RecordingControls />;
       case 'output':
         return <OutputManager />;
+      case 'slides':
+        return <SlideModule />;
       default:
         return <MediaSourceSelector />;
     }

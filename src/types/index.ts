@@ -72,7 +72,7 @@ export interface OutputState {
 }
 
 // UI Related Types
-export type ActivePanel = 'source' | 'preview' | 'controls' | 'output';
+export type ActivePanel = 'source' | 'preview' | 'controls' | 'output' | 'slides';
 export interface WebcamPosition {
   x: number;
   y: number;
