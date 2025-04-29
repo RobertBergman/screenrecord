@@ -1,0 +1,201 @@
+.slide-editor {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.slide-editor-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ddd;
+}
+
+.slide-editor-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.slide-navigation {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.slide-navigation span {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.slide-editor-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.markdown-editor {
+  flex: 1;
+  border-right: 1px solid #ddd;
+  overflow: hidden;
+}
+
+.markdown-editor textarea {
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  border: none;
+  resize: none;
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  outline: none;
+}
+
+.slide-preview {
+  flex: 1;
+  overflow: auto;
+  padding: 1rem;
+  background-color: white;
+}
+
+.empty-slide-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #666;
+  text-align: center;
+  padding: 2rem;
+}
+
+.empty-slide-message p {
+  margin-bottom: 1rem;
+}
+
+.slide-thumbnails {
+  display: flex;
+  overflow-x: auto;
+  padding: 0.5rem;
+  background-color: #e5e5e5;
+  border-top: 1px solid #ddd;
+  gap: 0.5rem;
+}
+
+.slide-thumbnail {
+  position: relative;
+  min-width: 120px;
+  height: 80px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.slide-thumbnail:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.slide-thumbnail.active {
+  border: 2px solid #0077cc;
+}
+
+.thumbnail-number {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-bottom-right-radius: 4px;
+}
+
+.thumbnail-content {
+  font-size: 0.7rem;
+  padding: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 1.5rem;
+}
+
+/* Button styles */
+button {
+  padding: 0.5rem 0.8rem;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  background-color: #e0e0e0;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.modal-content p {
+  margin-bottom: 1rem;
+}
+
+.modal-content textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+  font-family: monospace;
+  margin-bottom: 1rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.8rem;
+}
