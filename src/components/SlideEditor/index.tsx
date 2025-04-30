@@ -10,7 +10,8 @@ const SlideEditor: React.FC = () => {
   const { 
     state, 
     createNewSlide, 
-    updateSlideContent, 
+    updateSlideContent,
+    updateSlideScript, 
     navigateToSlide,
     navigateNext,
     navigatePrevious,
@@ -22,6 +23,8 @@ const SlideEditor: React.FC = () => {
   const currentSlide = slides[currentSlideIndex];
   
   const [markdownInput, setMarkdownInput] = useState<string>('');
+  const [scriptInput, setScriptInput] = useState<string>('');
+  const [activeTab, setActiveTab] = useState<'content' | 'script'>('content');
   const [importModalOpen, setImportModalOpen] = useState(false);
   const [importText, setImportText] = useState('');
 
@@ -29,6 +32,7 @@ const SlideEditor: React.FC = () => {
   useEffect(() => {
     if (currentSlide) {
       setMarkdownInput(currentSlide.content);
+      setScriptInput(currentSlide.script || '');
     }
   }, [currentSlide]);
 
@@ -37,6 +41,14 @@ const SlideEditor: React.FC = () => {
     setMarkdownInput(e.target.value);
     if (currentSlide) {
       updateSlideContent(currentSlide.id, e.target.value);
+    }
+  };
+  
+  // Handle slide script changes
+  const handleScriptChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setScriptInput(e.target.value);
+    if (currentSlide) {
+      updateSlideScript(currentSlide.id, e.target.value);
     }
   };
 
@@ -106,14 +118,43 @@ const SlideEditor: React.FC = () => {
         </div>
       </div>
       
+      <div className="slide-editor-tabs">
+        <button 
+          className={`tab-button ${activeTab === 'content' ? 'active' : ''}`}
+          onClick={() => setActiveTab('content')}
+        >
+          Content
+        </button>
+        <button 
+          className={`tab-button ${activeTab === 'script' ? 'active' : ''}`}
+          onClick={() => setActiveTab('script')}
+        >
+          Script
+        </button>
+      </div>
+      
       <div className="slide-editor-content">
-        <div className="markdown-editor">
-          <textarea
-            value={markdownInput}
-            onChange={handleContentChange}
-            placeholder="# Write your slide content in Markdown"
-          />
-        </div>
+        {activeTab === 'content' ? (
+          <div className="markdown-editor">
+            <textarea
+              value={markdownInput}
+              onChange={handleContentChange}
+              placeholder="# Write your slide content in Markdown"
+            />
+          </div>
+        ) : (
+          <div className="script-editor">
+            <textarea
+              value={scriptInput}
+              onChange={handleScriptChange}
+              placeholder="Enter the script for text-to-speech narration"
+            />
+            <div className="script-info">
+              <p>This script will be used for text-to-speech narration in presentation mode.</p>
+              <p>If no script is provided, the slide content will be used instead.</p>
+            </div>
+          </div>
+        )}
         
         <div className="slide-preview">
           {currentSlide ? (

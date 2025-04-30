@@ -3,16 +3,25 @@
 ## Technology Stack
 
 ### Frontend Framework
-- **React**: Used for building the user interface
-- **TypeScript**: For type-safe code development
+- **React**: v19.0.0 - Latest version for building the user interface
+- **TypeScript**: v5.7.2 - For type-safe code development
 - **React Hooks**: For state management and side effects
 
 ### Build Tools
-- **Vite**: Fast, modern build tool and development server
-- **ESLint**: Code quality and style enforcement
-- **Prettier**: Code formatting
+- **Vite**: v6.3.1 - Fast, modern build tool and development server
+- **ESLint**: v9.22.0 - Code quality and style enforcement with modern configurations
+- **TypeScript-ESLint**: v8.26.1 - TypeScript-specific linting rules
+- **Prettier**: Code formatting (configured through ESLint)
 - **Jest**: Testing framework
 - **React Testing Library**: Component testing utilities
+
+### Key Libraries
+- **React Markdown**: v10.1.0 - Markdown rendering for slide functionality
+- **Marked**: v15.0.11 - Markdown parsing library
+- **PrismJS**: v1.30.0 - Syntax highlighting for code blocks in markdown
+- **Styled Components**: v6.1.17 - CSS-in-JS styling solution
+- **React-Use**: v17.6.0 - Collection of essential React Hooks
+- **UUID**: v11.1.0 - For generating unique identifiers
 
 ### Key Browser APIs
 - **MediaDevices API**: Accessing camera and microphone
@@ -37,36 +46,45 @@
 ```
 /
 ├── public/             # Static assets
+│   └── assets/         # Static resource files (templates, etc.)
 ├── src/
 │   ├── components/     # React components
 │   │   ├── MediaSourceSelector/
 │   │   ├── PreviewPanel/
 │   │   ├── RecordingControls/
-│   │   └── OutputManager/
+│   │   ├── OutputManager/
+│   │   ├── SlideRenderer/
+│   │   ├── SlideEditor/
+│   │   ├── Presentation/
+│   │   ├── SlideContent/
+│   │   └── SlideModule/
 │   ├── hooks/          # Custom React hooks
 │   ├── services/       # Media handling services
+│   │   ├── ScreenCaptureService.ts
+│   │   ├── WebcamService.ts
+│   │   ├── AudioCaptureService.ts
+│   │   ├── RecordingService.ts
+│   │   └── MarkdownParserService.ts
 │   ├── utils/          # Utility functions
+│   │   ├── errorHandling.ts
+│   │   └── featureDetection.ts
 │   ├── contexts/       # React contexts
+│   │   ├── AppContext.tsx
+│   │   └── SlideContext.tsx
 │   ├── types/          # TypeScript type definitions
+│   │   ├── index.ts
+│   │   └── slide.ts
 │   ├── constants/      # Application constants
+│   ├── reducers/       # State reducers
+│   │   └── slideReducer.ts
 │   ├── assets/         # Component-specific assets
 │   ├── App.tsx         # Main application component
 │   └── main.tsx        # Application entry point
-├── tests/              # Test files
 ├── .eslintrc.js        # ESLint configuration
-├── .prettierrc         # Prettier configuration
 ├── tsconfig.json       # TypeScript configuration
 ├── vite.config.ts      # Vite configuration
 └── package.json        # Dependencies and scripts
 ```
-
-### Key NPM Packages
-- **@types/react**: TypeScript definitions for React
-- **@types/dom-mediacapture-record**: TypeScript definitions for MediaRecorder
-- **react-use**: Collection of essential React Hooks
-- **styled-components**: CSS-in-JS styling solution
-- **ffmpeg.wasm**: (Optional) For client-side video processing
-- **waveform-data**: For audio visualization
 
 ## Technical Constraints
 
@@ -93,6 +111,32 @@
 - Recording indicators must be clearly visible
 - Privacy-sensitive recording options must be opt-in
 - All processing occurs client-side for data privacy
+
+## Best Practices
+
+### React Best Practices
+- Use functional components with hooks instead of class components
+- Apply proper memoization using `useMemo` and `useCallback` to optimize rendering
+- Avoid accessing `ref.current` properties during render phase
+- Never reassign variables after render, use state management instead
+- Follow rules of hooks - only call at top level, not in conditionals
+- Avoid creating components inside render functions
+- No direct mutation of global state
+- Use pure functions whenever possible
+- Proper cleanup in useEffect hooks to prevent memory leaks
+- Component composition over inheritance
+
+### TypeScript Best Practices
+- Use explicit return types for all functions
+- Avoid unused imports and declarations
+- Properly handle optional properties with null/undefined checks
+- Use correct module import/export patterns
+- Use explicit type imports (with 'type' keyword) when appropriate
+- Maintain strict null checking
+- Use utility types where appropriate
+- Use interfaces for object shapes and types for unions/primitives
+- Avoid using 'any' type - use unknown or proper typing instead
+- Leverage TypeScript's discriminated unions for complex state management
 
 ## Development Workflow
 

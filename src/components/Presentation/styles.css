@@ -44,6 +44,21 @@
   opacity: 0.3;
 }
 
+.presentation-navigation {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.presentation-audio-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 1rem;
+  padding-left: 1rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
 .presentation-container:hover .presentation-controls {
   opacity: 1;
 }
@@ -75,6 +90,16 @@
   border-radius: 25px;
   width: auto;
   padding: 0 15px;
+}
+
+.presentation-control-btn.play.speaking {
+  background-color: rgba(255, 50, 50, 0.2);
+  border-color: rgba(255, 100, 100, 0.6);
+}
+
+.presentation-control-btn.autoplay.active {
+  background-color: rgba(50, 200, 50, 0.2);
+  border-color: rgba(100, 255, 100, 0.6);
 }
 
 .presentation-progress {

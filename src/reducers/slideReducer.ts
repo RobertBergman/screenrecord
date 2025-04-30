@@ -12,6 +12,7 @@ export const initialSlideState: SlideState = {
   currentSlideIndex: 0,
   editMode: true,
   presentationMode: false,
+  autoPlayMode: false,
   theme: defaultTheme
 };
 
@@ -85,7 +86,16 @@ export const slideReducer = (state: SlideState, action: SlideAction): SlideState
         ...state,
         presentationMode: !state.presentationMode,
         // Exit edit mode when entering presentation mode
-        editMode: state.presentationMode ? state.editMode : false
+        editMode: state.presentationMode ? state.editMode : false,
+        // Exit autoplay mode when exiting presentation mode
+        autoPlayMode: state.presentationMode ? false : state.autoPlayMode
+      };
+    }
+    
+    case 'TOGGLE_AUTOPLAY_MODE': {
+      return {
+        ...state,
+        autoPlayMode: !state.autoPlayMode
       };
     }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import './styles.css';
 import { useSlides } from '../../contexts/SlideContext';
 import SlideRenderer from '../SlideRenderer';
@@ -11,10 +11,15 @@ const Presentation: React.FC = () => {
     state, 
     navigateNext, 
     navigatePrevious, 
-    togglePresentationMode 
+    togglePresentationMode,
+    toggleAutoPlayMode,
+    playCurrentSlide,
+    stopSpeech,
+    isCurrentlyPlaying
   } = useSlides();
   
-  const { slides, currentSlideIndex, presentationMode } = state;
+  const { slides, currentSlideIndex, presentationMode, autoPlayMode } = state;
+  const [speakingStatus, setSpeakingStatus] = useState(false);
   const currentSlide = slides[currentSlideIndex];
 
   // Handle keyboard navigation
@@ -25,8 +30,23 @@ const Presentation: React.FC = () => {
       navigatePrevious();
     } else if (e.key === 'Escape') {
       togglePresentationMode();
+    } else if (e.key === 'p' || e.key === 'P') {
+      // Play/pause current slide with 'p' key
+      handlePlayCurrentSlide();
+    } else if (e.key === 'a' || e.key === 'A') {
+      // Toggle autoplay with 'a' key
+      toggleAutoPlayMode();
     }
-  }, [navigateNext, navigatePrevious, togglePresentationMode]);
+  }, [navigateNext, navigatePrevious, togglePresentationMode, toggleAutoPlayMode]);
+
+  // Check speaking status periodically
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSpeakingStatus(isCurrentlyPlaying());
+    }, 500);
+    
+    return () => clearInterval(interval);
+  }, [isCurrentlyPlaying]);
 
   // Set up keyboard event listeners
   useEffect(() => {
@@ -39,8 +59,19 @@ const Presentation: React.FC = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       document.body.classList.remove('presentation-mode');
+      // Stop any ongoing speech when exiting presentation mode
+      stopSpeech();
     };
-  }, [presentationMode, handleKeyDown]);
+  }, [presentationMode, handleKeyDown, stopSpeech]);
+  
+  // Handler for playing current slide
+  const handlePlayCurrentSlide = async () => {
+    if (isCurrentlyPlaying()) {
+      stopSpeech();
+    } else {
+      await playCurrentSlide();
+    }
+  };
 
   if (!presentationMode) {
     return null;
@@ -59,25 +90,45 @@ const Presentation: React.FC = () => {
       </div>
       
       <div className="presentation-controls">
-        <button 
-          className="presentation-control-btn previous"
-          onClick={navigatePrevious}
-          disabled={currentSlideIndex === 0}
-        >
-          ←
-        </button>
-        
-        <div className="presentation-progress">
-          {currentSlideIndex + 1} / {slides.length}
+        <div className="presentation-navigation">
+          <button 
+            className="presentation-control-btn previous"
+            onClick={navigatePrevious}
+            disabled={currentSlideIndex === 0}
+          >
+            ←
+          </button>
+          
+          <div className="presentation-progress">
+            {currentSlideIndex + 1} / {slides.length}
+          </div>
+          
+          <button 
+            className="presentation-control-btn next"
+            onClick={navigateNext}
+            disabled={currentSlideIndex === slides.length - 1}
+          >
+            →
+          </button>
         </div>
         
-        <button 
-          className="presentation-control-btn next"
-          onClick={navigateNext}
-          disabled={currentSlideIndex === slides.length - 1}
-        >
-          →
-        </button>
+        <div className="presentation-audio-controls">
+          <button 
+            className={`presentation-control-btn play ${speakingStatus ? 'speaking' : ''}`}
+            onClick={handlePlayCurrentSlide}
+            title={speakingStatus ? "Stop speaking" : "Play this slide"}
+          >
+            {speakingStatus ? '◼' : '▶'}
+          </button>
+          
+          <button 
+            className={`presentation-control-btn autoplay ${autoPlayMode ? 'active' : ''}`}
+            onClick={toggleAutoPlayMode}
+            title={autoPlayMode ? "Turn off auto-play" : "Turn on auto-play"}
+          >
+            {autoPlayMode ? '⟳' : '⟲'}
+          </button>
+        </div>
         
         <button 
           className="presentation-control-btn exit"

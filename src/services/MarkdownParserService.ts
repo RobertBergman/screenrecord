@@ -7,6 +7,8 @@ const LAYOUT_PATTERN = /layout:\s*(.+)/;
 const BACKGROUND_PATTERN = /background:\s*(.+)/;
 const NOTES_SEPARATOR = '<!-- Notes:';
 const NOTES_END = '-->';
+const SCRIPT_SEPARATOR = '<!-- Script:';
+const SCRIPT_END = '-->';
 
 /**
  * Service responsible for parsing Markdown into slide data
@@ -68,6 +70,22 @@ export class MarkdownParserService {
           .trim();
       }
     }
+    
+    // Extract script if present
+    const scriptStartIndex = content.indexOf(SCRIPT_SEPARATOR);
+    if (scriptStartIndex !== -1) {
+      const scriptEndIndex = content.indexOf(SCRIPT_END, scriptStartIndex);
+      if (scriptEndIndex !== -1) {
+        slide.script = content
+          .substring(scriptStartIndex + SCRIPT_SEPARATOR.length, scriptEndIndex)
+          .trim();
+        
+        // Remove script from the main content
+        slide.content = slide.content
+          .replace(content.substring(scriptStartIndex, scriptEndIndex + SCRIPT_END.length), '')
+          .trim();
+      }
+    }
 
     return slide;
   }
@@ -97,6 +115,11 @@ export class MarkdownParserService {
       // Add notes if present
       if (slide.notes) {
         slideContent += `\n\n<!-- Notes:\n${slide.notes}\n-->`;
+      }
+      
+      // Add script if present
+      if (slide.script) {
+        slideContent += `\n\n<!-- Script:\n${slide.script}\n-->`;
       }
       
       return slideContent;

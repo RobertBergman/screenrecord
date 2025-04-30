@@ -4,6 +4,7 @@ export interface Slide {
   layout?: string;
   background?: string;
   notes?: string;
+  script?: string;
 }
 
 export interface SlideTheme {
@@ -17,6 +18,7 @@ export interface SlideState {
   currentSlideIndex: number;
   editMode: boolean;
   presentationMode: boolean;
+  autoPlayMode: boolean;
   theme: SlideTheme;
 }
 
@@ -28,5 +30,6 @@ export type SlideAction =
   | { type: 'SET_CURRENT_SLIDE'; payload: number }
   | { type: 'TOGGLE_EDIT_MODE' }
   | { type: 'TOGGLE_PRESENTATION_MODE' }
+  | { type: 'TOGGLE_AUTOPLAY_MODE' }
   | { type: 'SET_THEME'; payload: SlideTheme }
   | { type: 'IMPORT_SLIDES'; payload: Slide[] };
