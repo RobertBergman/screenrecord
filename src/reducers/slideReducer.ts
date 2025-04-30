@@ -85,8 +85,8 @@ export const slideReducer = (state: SlideState, action: SlideAction): SlideState
       return {
         ...state,
         presentationMode: !state.presentationMode,
-        // Exit edit mode when entering presentation mode
-        editMode: state.presentationMode ? state.editMode : false,
+        // Exit edit mode when entering presentation mode, restore it when exiting
+        editMode: state.presentationMode ? true : false,
         // Exit autoplay mode when exiting presentation mode
         autoPlayMode: state.presentationMode ? false : state.autoPlayMode
       };

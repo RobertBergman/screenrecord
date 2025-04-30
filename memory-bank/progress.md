@@ -102,6 +102,22 @@ The Screen Recorder project has moved from initial development to active feature
 - System audio capture not supported in all browsers
 - Template loading from public/assets directory is inconsistent in some environments
 - Memory management challenges for very large slide decks
+- Onscreen controls in presentation mode need improved visibility and interaction
+
+### Recent Fixes
+- Fixed issue where slide editor would disappear when hitting escape after presentation mode
+  - Updated slideReducer to properly restore editor mode when exiting presentation mode
+- Added ability to open exported presentations with a new file import functionality
+  - Added "Open File" button in the slide module header
+  - Implemented file import modal with drag-and-drop support
+  - Added markdown file reading and importing capabilities
+- Improved onscreen controls in presentation mode
+  - Made controls larger, more visible, and more interactive
+  - Added subtle animations and hover effects for better user feedback
+  - Improved visual hierarchy with better spacing and borders
+  - Enhanced speaker notes visibility with better styling
+  - Improved help popup readability with better typography and colors
+  - Added visual indicators for active states (speaking/auto-play)
 
 ## Development History
 

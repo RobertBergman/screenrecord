@@ -45,6 +45,22 @@ We have enhanced the Screen Recorder application by implementing a new feature t
 - **SlideContent**: Manages slide content and template loading
 - **SlideModule**: Integrates all slide components into a cohesive user interface with settings access
 - **SettingsModal**: Provides configuration interface for TTS API keys and options
+- **FileImportHandler**: New component for importing external markdown presentation files
+
+#### Recent Fixes
+- Fixed issue where slide editor would disappear when hitting escape after presentation mode
+  - Updated slideReducer to properly restore editor mode when exiting presentation mode
+- Added ability to open exported presentations
+  - Added "Open File" button in the slide module header
+  - Implemented file import modal with drag-and-drop support
+  - Added markdown file reading and importing capabilities
+- Improved onscreen controls in presentation mode
+  - Made controls larger, more visible, and more interactive
+  - Added subtle animations and hover effects for better user feedback
+  - Improved visual hierarchy with better spacing and borders
+  - Enhanced speaker notes visibility with better styling
+  - Improved help popup readability with better typography and colors
+  - Added visual indicators for active states (speaking/auto-play)
 
 #### New Services
 - **MarkdownParserService**: Converts markdown content to slide objects and vice versa, including script extraction
