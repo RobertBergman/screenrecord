@@ -6,6 +6,7 @@ import MediaSourceSelector from './components/MediaSourceSelector';
 import PreviewPanel from './components/PreviewPanel';
 import RecordingControls from './components/RecordingControls';
 import OutputManager from './components/OutputManager';
+import SlideModule from './components/SlideModule';
 import { checkAppCompatibility } from './utils/featureDetection';
 
 // Styled components
@@ -209,6 +210,60 @@ const FeatureCard = styled.div`
   }
 `;
 
+const ToolCard = styled.div`
+  background-color: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  }
+`;
+
+const ToolsContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+  margin: 50px 0;
+  
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+`;
+
+const ToolIcon = styled.div`
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #e8f0fe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  font-size: 36px;
+  color: #4285f4;
+`;
+
+const ToolTitle = styled.h3`
+  margin: 0 0 16px 0;
+  font-size: 24px;
+  color: #333;
+`;
+
+const ToolDescription = styled.p`
+  margin: 0 0 24px 0;
+  color: #666;
+  line-height: 1.5;
+`;
+
 const FeatureIcon = styled.div`
   width: 50px;
   height: 50px;
@@ -247,24 +302,7 @@ const IncompatibleBrowserMessage = styled.div`
   text-align: center;
 `;
 
-const StartButton = styled.button`
-  background-color: #4285f4;
-  color: white;
-  border: none;
-  border-radius: 28px;
-  padding: 14px 32px;
-  font-size: 18px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: transform 0.2s, background-color 0.2s;
-  margin-top: 30px;
-  box-shadow: 0 4px 12px rgba(66, 133, 244, 0.4);
-  
-  &:hover {
-    background-color: #3367d6;
-    transform: translateY(-2px);
-  }
-`;
+// Removed unused StartButton component
 
 const Footer = styled.footer`
   text-align: center;
@@ -275,8 +313,11 @@ const Footer = styled.footer`
   margin-top: 60px;
 `;
 
-// HomeScreen component shows the landing page with demo and features
-const HomeScreen: React.FC<{onStartClick: () => void}> = ({ onStartClick }) => {
+// HomeScreen component shows the landing page with two main options: Screen Recording and Markdown Presentation
+const HomeScreen: React.FC<{
+  onStartRecording: () => void,
+  onStartPresentation: () => void
+}> = ({ onStartRecording, onStartPresentation }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   
   // Auto-play the demo video when component mounts
@@ -287,16 +328,16 @@ const HomeScreen: React.FC<{onStartClick: () => void}> = ({ onStartClick }) => {
       });
     }
   }, []);
+  
   return (
     <>
       <HeroSection>
         <HeroContent>
-          <HeroTitle>Record Your Screen with Ease</HeroTitle>
+          <HeroTitle>Capture and Present with Ease</HeroTitle>
           <HeroText>
-            Capture your screen, webcam, and audio all at once. Perfect for creating tutorials,
-            presentations, gameplay videos, and more - all directly in your browser with no downloads required.
+            All-in-one tool for screen recording and markdown presentations. Perfect for tutorials,
+            demonstrations, lectures, and more - all directly in your browser with no downloads required.
           </HeroText>
-          <HeroButton onClick={onStartClick}>Start Recording</HeroButton>
         </HeroContent>
         
         <DemoContainer>
@@ -319,6 +360,32 @@ const HomeScreen: React.FC<{onStartClick: () => void}> = ({ onStartClick }) => {
         </DemoContainer>
       </HeroSection>
       
+      <h2 style={{ textAlign: 'center', margin: '40px 0 20px', fontSize: '32px', color: '#333' }}>
+        Choose Your Tool
+      </h2>
+      
+      <ToolsContainer>
+        <ToolCard onClick={onStartRecording}>
+          <ToolIcon>🎥</ToolIcon>
+          <ToolTitle>Screen Recording</ToolTitle>
+          <ToolDescription>
+            Capture your screen, webcam, and audio all at once. Perfect for creating tutorials,
+            demos, gameplay videos, and more.
+          </ToolDescription>
+          <HeroButton onClick={onStartRecording}>Start Recording</HeroButton>
+        </ToolCard>
+        
+        <ToolCard onClick={onStartPresentation}>
+          <ToolIcon>📊</ToolIcon>
+          <ToolTitle>Markdown Presentation</ToolTitle>
+          <ToolDescription>
+            Create beautiful slide presentations using simple Markdown syntax.
+            Present your ideas with clean, professional slides.
+          </ToolDescription>
+          <HeroButton onClick={onStartPresentation}>Create Presentation</HeroButton>
+        </ToolCard>
+      </ToolsContainer>
+      
       <Features>
         <FeatureCard>
           <FeatureIcon>🎥</FeatureIcon>
@@ -337,19 +404,13 @@ const HomeScreen: React.FC<{onStartClick: () => void}> = ({ onStartClick }) => {
         </FeatureCard>
         
         <FeatureCard>
-          <FeatureIcon>📱</FeatureIcon>
-          <FeatureTitle>Webcam Overlay</FeatureTitle>
+          <FeatureIcon>📝</FeatureIcon>
+          <FeatureTitle>Markdown Support</FeatureTitle>
           <FeatureDescription>
-            Add your webcam feed as an overlay with adjustable positioning to personalize your recordings.
+            Create presentations using simple Markdown syntax with support for headers, lists, code blocks, and more.
           </FeatureDescription>
         </FeatureCard>
       </Features>
-      
-      <div style={{ textAlign: 'center' }}>
-        <StartButton onClick={onStartClick}>
-          Start Your Recording Now
-        </StartButton>
-      </div>
     </>
   );
 };
@@ -358,74 +419,173 @@ const HomeScreen: React.FC<{onStartClick: () => void}> = ({ onStartClick }) => {
 const AppContent: React.FC = () => {
   const { state, dispatch } = useAppContext();
   
-  // Handle start button click by directly starting the screen capture process
+  // Handle start recording flow
   const handleStartRecording = async () => {
-    // Import services needed for screen capture
-    const { screenCaptureService } = await import('./services/ScreenCaptureService');
-    
     try {
-      // Start the screen capture directly from here
-      const screenOptions = {
-        audio: false, // Default to no system audio
-        video: true,
-      };
-      
-      // Capture screen
-      const screenStream = await screenCaptureService.captureScreen(screenOptions);
-      
-      // Update app state with screen stream
+      // Set the active feature to screenRecorder
       dispatch({
-        type: 'SET_STREAM',
-        streamType: 'screen',
-        stream: screenStream,
+        type: 'SET_ACTIVE_FEATURE',
+        feature: 'screenRecorder',
       });
       
-      // Set selected screen options in state
-      dispatch({
-        type: 'SET_SELECTED_SCREEN',
-        screen: screenOptions,
-      });
-      
-      // Move directly to the preview panel
-      dispatch({
-        type: 'SET_ACTIVE_PANEL',
-        panel: 'preview',
-      });
-    } catch (error) {
-      console.error('Failed to capture screen:', error);
-      
-      // If we fail, show the media selector so the user can try again manually
+      // Set the active panel to source to start the screen recording flow
       dispatch({
         type: 'SET_ACTIVE_PANEL',
         panel: 'source',
       });
+    } catch (error) {
+      console.error('Failed to start recording flow:', error);
     }
   };
   
-  // Render the home screen or the active panel based on state
-  const renderContent = () => {
-    // If we're displaying the home screen 
-    // (This is a special state where we're at 'source' but haven't started the flow yet)
-    const showingHomeScreen = state.uiState.activePanel === 'source' && 
-                              !state.mediaState.selectedSources.screen &&
-                              !state.mediaState.streams.screen;
-                              
-    if (showingHomeScreen) {
-      return <HomeScreen onStartClick={handleStartRecording} />;
-    }
+  // Handle start presentation flow
+  const handleStartPresentation = () => {
+    // Set the active feature to presentation
+    dispatch({
+      type: 'SET_ACTIVE_FEATURE',
+      feature: 'presentation',
+    });
     
-    // Otherwise, render the appropriate component based on the active panel
-    switch (state.uiState.activePanel) {
-      case 'source':
-        return <MediaSourceSelector />;
-      case 'preview':
-        return <PreviewPanel />;
-      case 'controls':
-        return <RecordingControls />;
-      case 'output':
-        return <OutputManager />;
+    // Set the active panel to slides to start the presentation flow
+    dispatch({
+      type: 'SET_ACTIVE_PANEL',
+      panel: 'slides',
+    });
+  };
+  
+  // Handle return to home
+  const handleReturnToHome = () => {
+    // Set the active feature back to home
+    dispatch({
+      type: 'SET_ACTIVE_FEATURE',
+      feature: 'home',
+    });
+  };
+  
+  // Render content based on the active feature and panel
+  const renderContent = () => {
+    // Determine what to render based on the active feature
+    switch (state.uiState.activeFeature) {
+      case 'home':
+        return (
+          <HomeScreen 
+            onStartRecording={handleStartRecording} 
+            onStartPresentation={handleStartPresentation}
+          />
+        );
+        
+      case 'screenRecorder':
+        // Render Screen Recorder path components based on active panel
+        switch (state.uiState.activePanel) {
+          case 'source':
+            return (
+              <div>
+                <button 
+                  onClick={handleReturnToHome}
+                  style={{ 
+                    marginBottom: '16px', 
+                    padding: '8px 16px',
+                    background: 'none',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  ← Back to Home
+                </button>
+                <MediaSourceSelector />
+              </div>
+            );
+          case 'preview':
+            return (
+              <div>
+                <button 
+                  onClick={handleReturnToHome}
+                  style={{ 
+                    marginBottom: '16px', 
+                    padding: '8px 16px',
+                    background: 'none',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  ← Back to Home
+                </button>
+                <PreviewPanel />
+              </div>
+            );
+          case 'controls':
+            return (
+              <div>
+                <button 
+                  onClick={handleReturnToHome}
+                  style={{ 
+                    marginBottom: '16px', 
+                    padding: '8px 16px',
+                    background: 'none',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  ← Back to Home
+                </button>
+                <RecordingControls />
+              </div>
+            );
+          case 'output':
+            return (
+              <div>
+                <button 
+                  onClick={handleReturnToHome}
+                  style={{ 
+                    marginBottom: '16px', 
+                    padding: '8px 16px',
+                    background: 'none',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  ← Back to Home
+                </button>
+                <OutputManager />
+              </div>
+            );
+          default:
+            return <MediaSourceSelector />;
+        }
+        
+      case 'presentation':
+        // Render Presentation path components
+        return (
+          <div>
+            <button 
+              onClick={handleReturnToHome}
+              style={{ 
+                marginBottom: '16px', 
+                padding: '8px 16px',
+                background: 'none',
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+                cursor: 'pointer'
+              }}
+            >
+              ← Back to Home
+            </button>
+            <SlideModule />
+          </div>
+        );
+        
       default:
-        return <MediaSourceSelector />;
+        // Fallback to home screen
+        return (
+          <HomeScreen 
+            onStartRecording={handleStartRecording} 
+            onStartPresentation={handleStartPresentation}
+          />
+        );
     }
   };
   
@@ -444,10 +604,10 @@ const App: React.FC = () => {
   return (
     <AppContainer>
       <AppHeader>
-        <AppTitle>Screen Recorder</AppTitle>
+        <AppTitle>Screen Recorder & Presenter</AppTitle>
         <AppSubtitle>
-          Professional-quality screen recording right in your browser. 
-          Capture your screen, webcam, and audio with just a few clicks.
+          Professional-quality screen recording and markdown presentations right in your browser.
+          Capture your screen or create beautiful presentations with just a few clicks.
         </AppSubtitle>
       </AppHeader>
       
@@ -476,10 +636,10 @@ const App: React.FC = () => {
       
       <Footer>
         <p>
-          Screen Recorder App &copy; {new Date().getFullYear()} | Privacy-focused, browser-based recording
+          Screen Recorder & Presenter &copy; {new Date().getFullYear()} | Privacy-focused, browser-based tools
         </p>
         <p style={{ marginTop: '8px', fontSize: '12px' }}>
-          No downloads required. Your recordings stay on your device. Supporting Chrome, Firefox, and Edge.
+          No downloads required. Your data stays on your device. Supporting Chrome, Firefox, and Edge.
         </p>
       </Footer>
     </AppContainer>

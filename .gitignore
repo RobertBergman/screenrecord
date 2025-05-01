@@ -1,4 +1,4 @@
-# # Logs
+# Logs
 logs
 *.log
 npm-debug.log*
@@ -24,6 +24,4 @@ dist-ssr
 *.sw?
 
 # Custom development files
-.clinerules/
 .clineignore
-memory-bank/

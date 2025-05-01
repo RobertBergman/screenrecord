@@ -24,6 +24,34 @@ const SourceSelectorContainer = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
+const SourceCard = styled.div`
+  background-color: white;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eee;
+  transition: transform 0.2s, box-shadow 0.2s;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+`;
+
+const CardTitle = styled.h3`
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  color: #333;
+`;
+
+const CardDescription = styled.p`
+  margin: 0 0 16px 0;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+`;
+
 const SectionTitle = styled.h3`
   margin: 0 0 10px 0;
   color: #333;
@@ -279,12 +307,25 @@ const MediaSourceSelector: React.FC = () => {
     }
   };
   
+  // Handler for navigating to slide editor
+  const handleCreateSlides = () => {
+    dispatch({
+      type: 'SET_ACTIVE_PANEL',
+      panel: 'slides',
+    });
+  };
+  
   return (
     <SourceSelectorContainer>
-      <div>
-        <SectionTitle>Screen Capture</SectionTitle>
-        <SourceOption>
-          <SourceLabel>Select what to record:</SourceLabel>
+      <h2 style={{ marginBottom: '20px', color: '#333', fontSize: '24px' }}>Configure Screen Recording</h2>
+      
+      <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+        <SourceCard>
+          <CardTitle>Screen Recording</CardTitle>
+          <CardDescription>
+            Record your screen with optional webcam overlay and audio. 
+            Perfect for tutorials, demos, and presentations.
+          </CardDescription>
           <Button 
             onClick={handleCaptureScreen}
             disabled={isLoading}
@@ -292,11 +333,13 @@ const MediaSourceSelector: React.FC = () => {
           >
             {isLoading ? 'Setting up...' : 'Capture Screen'}
           </Button>
-          <div style={{ fontSize: '12px', marginTop: '8px', color: '#666' }}>
-            You'll be prompted to select a screen, window, or tab to share
-          </div>
-        </SourceOption>
-        
+        </SourceCard>
+      </div>
+      
+      <SectionTitle>Recording Options</SectionTitle>
+      
+      <div>
+        <SectionTitle>System Audio</SectionTitle>
         {hasSystemAudioSupport && (
           <ToggleContainer>
             <ToggleInput

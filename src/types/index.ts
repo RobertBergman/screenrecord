@@ -72,7 +72,8 @@ export interface OutputState {
 }
 
 // UI Related Types
-export type ActivePanel = 'source' | 'preview' | 'controls' | 'output';
+export type ActiveFeature = 'home' | 'screenRecorder' | 'presentation';
+export type ActivePanel = 'source' | 'preview' | 'controls' | 'output' | 'slides';
 export interface WebcamPosition {
   x: number;
   y: number;
@@ -87,6 +88,7 @@ export interface Notification {
 }
 
 export interface UIState {
+  activeFeature: ActiveFeature;
   activePanel: ActivePanel;
   webcamPosition: WebcamPosition;
   showSettings: boolean;

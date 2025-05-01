@@ -1,0 +1,194 @@
+.slide-module {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 600px;
+}
+
+.slide-module-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #4285f4 0%, #34a853 100%);
+  border-radius: 8px;
+  color: white;
+}
+
+.slide-module-header-content {
+  text-align: center;
+}
+
+.slide-module-header-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.file-button,
+.settings-button {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.file-button:hover,
+.settings-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.slide-module-title {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+}
+
+.slide-module-description {
+  margin: 0;
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+.slide-module-content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.slide-module-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 0;
+  margin-top: 20px;
+}
+
+.slide-module-btn {
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.slide-module-btn.back-btn {
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.slide-module-btn.back-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.slide-module-btn.record-btn {
+  background-color: #4285f4;
+  color: white;
+  border: none;
+}
+
+.slide-module-btn.record-btn:hover {
+  background-color: #3367d6;
+}
+
+/* File Import Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 500px;
+  padding: 24px;
+  position: relative;
+}
+
+.import-modal h2 {
+  margin-top: 0;
+  color: #333;
+  font-size: 22px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.import-area {
+  border: 2px dashed #ccc;
+  border-radius: 6px;
+  padding: 30px;
+  text-align: center;
+  background-color: #f9f9f9;
+  transition: all 0.2s;
+  margin-bottom: 20px;
+}
+
+.import-area:hover {
+  border-color: #4285f4;
+  background-color: #f0f7ff;
+}
+
+.import-button {
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  margin: 15px 0;
+  transition: background-color 0.2s;
+}
+
+.import-button:hover {
+  background-color: #3367d6;
+}
+
+.file-info {
+  font-size: 14px;
+  color: #666;
+  margin-top: 8px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.modal-actions button {
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.modal-actions button:hover {
+  background-color: #e0e0e0;
+}
