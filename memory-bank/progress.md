@@ -28,6 +28,7 @@ The Screen Recorder project has moved from initial development to active feature
 - ✅ Technology stack updated to latest versions (React 19, TypeScript 5.7.2)
 - ✅ ESLint configuration with modern rule sets
 - ✅ Proper TypeScript type definitions for all components
+- ✅ Styled-components implementation with transient props
 
 ## What's In Progress
 
@@ -95,6 +96,7 @@ The Screen Recorder project has moved from initial development to active feature
 ### Fixed Issues
 - ✅ Recording preview not working after stopping a recording
 - ✅ Downloaded file not accessible/usable after recording
+- ✅ Styled-components warnings about unknown props being passed to DOM elements
 
 ### Known Issues
 - Media handling in Firefox may require different approach due to codec support differences
@@ -105,6 +107,11 @@ The Screen Recorder project has moved from initial development to active feature
 - Onscreen controls in presentation mode need improved visibility and interaction
 
 ### Recent Fixes
+- Fixed styled-components warning issues by implementing transient props
+  - Converted regular props like `status` and `variant` to transient props with `$` prefix
+  - Updated all components using styled-components to use this pattern
+  - Fixed TypeScript typing issues related to timer IDs with proper window references
+  - Implemented standard React best practices for styled-components usage
 - Fixed issue where slide editor would disappear when hitting escape after presentation mode
   - Updated slideReducer to properly restore editor mode when exiting presentation mode
 - Added ability to open exported presentations with a new file import functionality
@@ -120,6 +127,14 @@ The Screen Recorder project has moved from initial development to active feature
   - Added visual indicators for active states (speaking/auto-play)
 
 ## Development History
+
+### April 30, 2025
+- Fixed styled-components console warnings:
+  - Implemented transient props using `$` prefix in styled components
+  - Updated RecordingControls component to use proper props handling
+  - Fixed TimerInterval type issues with proper window reference
+  - Improved TypeScript type safety for styled components and timer handling
+  - Committed changes to git repository
 
 ### April 29, 2025 (Evening)
 - Added text-to-speech narration feature for slides:
@@ -194,8 +209,10 @@ The Screen Recorder project has moved from initial development to active feature
 - Implementing a phased approach to feature development
 - Using functional components with hooks exclusively
 - Adopting latest React patterns and best practices
+- Using transient props with styled-components to prevent DOM attribute warnings
 
 ### Lessons Learned
+- Styled-components require transient props (with `$` prefix) to prevent warnings when passing custom props
 - MediaRecorder's stop event needs careful handling to ensure all chunks are processed
 - Object URL lifecycle management is critical for proper media handling
 - Video element playback requires handling of AbortError during rapid state changes

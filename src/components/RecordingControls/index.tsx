@@ -27,13 +27,13 @@ const SectionTitle = styled.h3`
   font-weight: 600;
 `;
 
-const StatusIndicator = styled.div<{ status: string }>`
+const StatusIndicator = styled.div<{ $status: string }>`
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 12px;
   background-color: ${props => {
-    switch (props.status) {
+    switch (props.$status) {
       case 'recording': return '#ffebee';
       case 'paused': return '#fff8e1';
       case 'processing': return '#e8f5e9';
@@ -46,12 +46,12 @@ const StatusIndicator = styled.div<{ status: string }>`
   margin-bottom: 16px;
 `;
 
-const StatusIcon = styled.div<{ status: string }>`
+const StatusIcon = styled.div<{ $status: string }>`
   width: 16px;
   height: 16px;
   border-radius: 50%;
   background-color: ${props => {
-    switch (props.status) {
+    switch (props.$status) {
       case 'recording': return '#d32f2f';
       case 'paused': return '#ffa000';
       case 'processing': return '#43a047';
@@ -61,7 +61,7 @@ const StatusIcon = styled.div<{ status: string }>`
     }
   }};
   
-  ${props => props.status === 'recording' && `
+  ${props => props.$status === 'recording' && `
     animation: pulse 1.5s infinite;
     @keyframes pulse {
       0% { opacity: 1; }
@@ -92,13 +92,13 @@ const ControlsRow = styled.div`
 `;
 
 interface ControlButtonProps {
-  variant: 'primary' | 'secondary' | 'danger';
+  $variant: 'primary' | 'secondary' | 'danger';
 }
 
 const ControlButton = styled.button<ControlButtonProps>`
   padding: 12px 24px;
   background-color: ${props => {
-    switch (props.variant) {
+    switch (props.$variant) {
       case 'primary': return '#4285f4';
       case 'secondary': return '#9e9e9e';
       case 'danger': return '#d32f2f';
@@ -115,7 +115,7 @@ const ControlButton = styled.button<ControlButtonProps>`
   
   &:hover {
     background-color: ${props => {
-      switch (props.variant) {
+      switch (props.$variant) {
         case 'primary': return '#3367d6';
         case 'secondary': return '#757575';
         case 'danger': return '#b71c1c';
@@ -263,13 +263,13 @@ const RecordingControls: React.FC = () => {
       clearInterval(timerInterval);
     }
     
-    const interval = setInterval(() => {
+    const interval = window.setInterval(() => {
       const duration = recordingService.getDuration();
       dispatch({
         type: 'SET_RECORDING_DURATION',
         duration,
       });
-    }, 100);
+    }, 100) as unknown as number;
     
     setTimerInterval(interval);
   }, [dispatch, timerInterval]);
@@ -355,7 +355,7 @@ const RecordingControls: React.FC = () => {
       console.log('Processing recording... Please wait.');
       
       // If after 5 seconds we're still in processing state, something might be wrong
-      setTimeout(() => {
+      window.setTimeout(() => {
         if (state.recordingState.status === 'processing') {
           console.log('Recording is taking longer than expected to process...');
         }
@@ -400,10 +400,10 @@ const RecordingControls: React.FC = () => {
       case 'idle':
         return (
           <ControlsRow>
-            <ControlButton variant="secondary" onClick={handleBackToPreview}>
+            <ControlButton $variant="secondary" onClick={handleBackToPreview}>
               Back
             </ControlButton>
-            <ControlButton variant="primary" onClick={startRecording}>
+            <ControlButton $variant="primary" onClick={startRecording}>
               Start Recording
             </ControlButton>
           </ControlsRow>
@@ -412,10 +412,10 @@ const RecordingControls: React.FC = () => {
       case 'recording':
         return (
           <ControlsRow>
-            <ControlButton variant="secondary" onClick={pauseRecording}>
+            <ControlButton $variant="secondary" onClick={pauseRecording}>
               Pause
             </ControlButton>
-            <ControlButton variant="danger" onClick={stopRecording}>
+            <ControlButton $variant="danger" onClick={stopRecording}>
               Stop Recording
             </ControlButton>
           </ControlsRow>
@@ -424,10 +424,10 @@ const RecordingControls: React.FC = () => {
       case 'paused':
         return (
           <ControlsRow>
-            <ControlButton variant="primary" onClick={resumeRecording}>
+            <ControlButton $variant="primary" onClick={resumeRecording}>
               Resume
             </ControlButton>
-            <ControlButton variant="danger" onClick={stopRecording}>
+            <ControlButton $variant="danger" onClick={stopRecording}>
               Stop Recording
             </ControlButton>
           </ControlsRow>
@@ -436,7 +436,7 @@ const RecordingControls: React.FC = () => {
       case 'processing':
         return (
           <ControlsRow>
-            <ControlButton variant="secondary" disabled>
+            <ControlButton $variant="secondary" disabled>
               Processing...
             </ControlButton>
           </ControlsRow>
@@ -445,10 +445,10 @@ const RecordingControls: React.FC = () => {
       case 'error':
         return (
           <ControlsRow>
-            <ControlButton variant="secondary" onClick={handleBackToPreview}>
+            <ControlButton $variant="secondary" onClick={handleBackToPreview}>
               Back
             </ControlButton>
-            <ControlButton variant="primary" onClick={startRecording}>
+            <ControlButton $variant="primary" onClick={startRecording}>
               Try Again
             </ControlButton>
           </ControlsRow>
@@ -483,8 +483,8 @@ const RecordingControls: React.FC = () => {
       <div>
         <SectionTitle>Recording</SectionTitle>
         
-        <StatusIndicator status={state.recordingState.status}>
-          <StatusIcon status={state.recordingState.status} />
+        <StatusIndicator $status={state.recordingState.status}>
+          <StatusIcon $status={state.recordingState.status} />
           <StatusText>{getStatusText()}</StatusText>
         </StatusIndicator>
         

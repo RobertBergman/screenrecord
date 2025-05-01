@@ -38,6 +38,13 @@ We have enhanced the Screen Recorder application by implementing a new feature t
 
 ### Recent Changes
 
+#### Styling and Component Improvements
+- Fixed styled-components warnings by implementing transient props
+  - Converted regular props to transient props using `$` prefix in styled components
+  - Updated RecordingControls component to use proper props handling
+  - Improved TypeScript type checking for styled components
+  - Fixed timer-related type issues with proper window reference and type casting
+
 #### New Components
 - **SlideRenderer**: Renders individual markdown slides with proper formatting and layouts
 - **SlideEditor**: Provides an interface for editing slides with markdown syntax, including script editing tab
@@ -87,6 +94,7 @@ We have enhanced the Screen Recorder application by implementing a new feature t
 - Avoiding component creation inside render functions
 - Implementing proper cleanup in useEffect hooks to prevent memory leaks
 - Using component composition instead of inheritance for reusable UI elements
+- Using transient props (`$` prefix) with styled-components to prevent DOM attribute warnings
 
 ### TypeScript Implementation
 - Using explicit return types for all functions
@@ -95,6 +103,7 @@ We have enhanced the Screen Recorder application by implementing a new feature t
 - Leveraging TypeScript's discriminated unions for complex state management
 - Avoiding the 'any' type in favor of proper type definitions
 - Using interfaces for object shapes and types for unions/primitives
+- Properly typing timer IDs and event handlers
 
 ## Next Steps
 
