@@ -16,7 +16,8 @@ const SlideEditor: React.FC = () => {
     navigateNext,
     navigatePrevious,
     importFromMarkdown,
-    exportToMarkdown
+    exportToMarkdown,
+    togglePresentationMode
   } = useSlides();
   
   const { slides, currentSlideIndex, editMode } = state;
@@ -99,6 +100,12 @@ const SlideEditor: React.FC = () => {
           <button onClick={createNewSlide}>New Slide</button>
           <button onClick={() => setImportModalOpen(true)}>Import</button>
           <button onClick={handleExport}>Export</button>
+          <button 
+            onClick={togglePresentationMode}
+            className="presentation-button"
+          >
+            Present
+          </button>
         </div>
         
         <div className="slide-navigation">

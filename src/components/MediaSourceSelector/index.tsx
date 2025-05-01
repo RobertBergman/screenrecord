@@ -317,7 +317,7 @@ const MediaSourceSelector: React.FC = () => {
   
   return (
     <SourceSelectorContainer>
-      <h2 style={{ marginBottom: '20px', color: '#333', fontSize: '24px' }}>Choose What to Create</h2>
+      <h2 style={{ marginBottom: '20px', color: '#333', fontSize: '24px' }}>Configure Screen Recording</h2>
       
       <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
         <SourceCard>
@@ -332,20 +332,6 @@ const MediaSourceSelector: React.FC = () => {
             data-testid="capture-screen-button"
           >
             {isLoading ? 'Setting up...' : 'Capture Screen'}
-          </Button>
-        </SourceCard>
-        
-        <SourceCard>
-          <CardTitle>Markdown Slides</CardTitle>
-          <CardDescription>
-            Create presentation slides using Markdown syntax. 
-            Include code blocks, images, and styling with simple text-based format.
-          </CardDescription>
-          <Button 
-            onClick={handleCreateSlides}
-            style={{ backgroundColor: '#34a853' }}
-          >
-            Create Slides
           </Button>
         </SourceCard>
       </div>

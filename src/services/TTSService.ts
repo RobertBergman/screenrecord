@@ -91,7 +91,7 @@ export class TTSService {
    */
   public async speakWithOpenAI(
     text: string, 
-    voiceId: 'alloy' | 'echo' | 'fable' | 'onyx' | 'nova' | 'shimmer' | 'coral' = 'coral'
+    voiceId: 'alloy' | 'echo' | 'fable' | 'onyx' | 'nova' | 'shimmer' | 'coral' = 'alloy'
   ): Promise<void> {
     // Validate we have OpenAI initialized
     if (!this.openai) {

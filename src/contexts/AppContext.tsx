@@ -43,6 +43,7 @@ const initialOutputState: OutputState = {
 };
 
 const initialUIState: UIState = {
+  activeFeature: 'home',
   activePanel: 'source',
   webcamPosition: WEBCAM_POSITION_PRESETS.bottomRight,
   showSettings: false,
@@ -75,6 +76,7 @@ type ActionType =
   | { type: 'SET_CUSTOM_QUALITY_SETTINGS', settings: OutputState['customSettings'] }
   | { type: 'SET_OUTPUT_BLOB', output: Blob | null }
   | { type: 'SET_DOWNLOAD_URL', url: string | null }
+  | { type: 'SET_ACTIVE_FEATURE', feature: UIState['activeFeature'] }
   | { type: 'SET_ACTIVE_PANEL', panel: UIState['activePanel'] }
   | { type: 'SET_WEBCAM_POSITION', position: UIState['webcamPosition'] }
   | { type: 'TOGGLE_SETTINGS' }
@@ -259,6 +261,15 @@ const appReducer = (state: AppState, action: ActionType): AppState => {
         outputState: {
           ...state.outputState,
           downloadUrl: action.url,
+        },
+      };
+      
+    case 'SET_ACTIVE_FEATURE':
+      return {
+        ...state,
+        uiState: {
+          ...state.uiState,
+          activeFeature: action.feature,
         },
       };
       

@@ -302,24 +302,7 @@ const IncompatibleBrowserMessage = styled.div`
   text-align: center;
 `;
 
-const StartButton = styled.button`
-  background-color: #4285f4;
-  color: white;
-  border: none;
-  border-radius: 28px;
-  padding: 14px 32px;
-  font-size: 18px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: transform 0.2s, background-color 0.2s;
-  margin-top: 30px;
-  box-shadow: 0 4px 12px rgba(66, 133, 244, 0.4);
-  
-  &:hover {
-    background-color: #3367d6;
-    transform: translateY(-2px);
-  }
-`;
+// Removed unused StartButton component
 
 const Footer = styled.footer`
   text-align: center;
@@ -389,7 +372,7 @@ const HomeScreen: React.FC<{
             Capture your screen, webcam, and audio all at once. Perfect for creating tutorials,
             demos, gameplay videos, and more.
           </ToolDescription>
-          <HeroButton>Start Recording</HeroButton>
+          <HeroButton onClick={onStartRecording}>Start Recording</HeroButton>
         </ToolCard>
         
         <ToolCard onClick={onStartPresentation}>
@@ -399,7 +382,7 @@ const HomeScreen: React.FC<{
             Create beautiful slide presentations using simple Markdown syntax.
             Present your ideas with clean, professional slides.
           </ToolDescription>
-          <HeroButton>Create Presentation</HeroButton>
+          <HeroButton onClick={onStartPresentation}>Create Presentation</HeroButton>
         </ToolCard>
       </ToolsContainer>
       
@@ -439,7 +422,13 @@ const AppContent: React.FC = () => {
   // Handle start recording flow
   const handleStartRecording = async () => {
     try {
-      // Just set the active panel to source to start the screen recording flow
+      // Set the active feature to screenRecorder
+      dispatch({
+        type: 'SET_ACTIVE_FEATURE',
+        feature: 'screenRecorder',
+      });
+      
+      // Set the active panel to source to start the screen recording flow
       dispatch({
         type: 'SET_ACTIVE_PANEL',
         panel: 'source',
@@ -451,6 +440,12 @@ const AppContent: React.FC = () => {
   
   // Handle start presentation flow
   const handleStartPresentation = () => {
+    // Set the active feature to presentation
+    dispatch({
+      type: 'SET_ACTIVE_FEATURE',
+      feature: 'presentation',
+    });
+    
     // Set the active panel to slides to start the presentation flow
     dispatch({
       type: 'SET_ACTIVE_PANEL',
@@ -458,36 +453,139 @@ const AppContent: React.FC = () => {
     });
   };
   
-  // Render the home screen or the active panel based on state
+  // Handle return to home
+  const handleReturnToHome = () => {
+    // Set the active feature back to home
+    dispatch({
+      type: 'SET_ACTIVE_FEATURE',
+      feature: 'home',
+    });
+  };
+  
+  // Render content based on the active feature and panel
   const renderContent = () => {
-    // Show home screen when in initial state
-    const showingHomeScreen = state.uiState.activePanel === 'source' && 
-                              !state.mediaState.selectedSources.screen &&
-                              !state.mediaState.streams.screen;
-                              
-    if (showingHomeScreen) {
-      return (
-        <HomeScreen 
-          onStartRecording={handleStartRecording} 
-          onStartPresentation={handleStartPresentation}
-        />
-      );
-    }
-    
-    // Otherwise, render the appropriate component based on the active panel
-    switch (state.uiState.activePanel) {
-      case 'source':
-        return <MediaSourceSelector />;
-      case 'preview':
-        return <PreviewPanel />;
-      case 'controls':
-        return <RecordingControls />;
-      case 'output':
-        return <OutputManager />;
-      case 'slides':
-        return <SlideModule />;
+    // Determine what to render based on the active feature
+    switch (state.uiState.activeFeature) {
+      case 'home':
+        return (
+          <HomeScreen 
+            onStartRecording={handleStartRecording} 
+            onStartPresentation={handleStartPresentation}
+          />
+        );
+        
+      case 'screenRecorder':
+        // Render Screen Recorder path components based on active panel
+        switch (state.uiState.activePanel) {
+          case 'source':
+            return (
+              <div>
+                <button 
+                  onClick={handleReturnToHome}
+                  style={{ 
+                    marginBottom: '16px', 
+                    padding: '8px 16px',
+                    background: 'none',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  ← Back to Home
+                </button>
+                <MediaSourceSelector />
+              </div>
+            );
+          case 'preview':
+            return (
+              <div>
+                <button 
+                  onClick={handleReturnToHome}
+                  style={{ 
+                    marginBottom: '16px', 
+                    padding: '8px 16px',
+                    background: 'none',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  ← Back to Home
+                </button>
+                <PreviewPanel />
+              </div>
+            );
+          case 'controls':
+            return (
+              <div>
+                <button 
+                  onClick={handleReturnToHome}
+                  style={{ 
+                    marginBottom: '16px', 
+                    padding: '8px 16px',
+                    background: 'none',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  ← Back to Home
+                </button>
+                <RecordingControls />
+              </div>
+            );
+          case 'output':
+            return (
+              <div>
+                <button 
+                  onClick={handleReturnToHome}
+                  style={{ 
+                    marginBottom: '16px', 
+                    padding: '8px 16px',
+                    background: 'none',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  ← Back to Home
+                </button>
+                <OutputManager />
+              </div>
+            );
+          default:
+            return <MediaSourceSelector />;
+        }
+        
+      case 'presentation':
+        // Render Presentation path components
+        return (
+          <div>
+            <button 
+              onClick={handleReturnToHome}
+              style={{ 
+                marginBottom: '16px', 
+                padding: '8px 16px',
+                background: 'none',
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+                cursor: 'pointer'
+              }}
+            >
+              ← Back to Home
+            </button>
+            <SlideModule />
+          </div>
+        );
+        
       default:
-        return <MediaSourceSelector />;
+        // Fallback to home screen
+        return (
+          <HomeScreen 
+            onStartRecording={handleStartRecording} 
+            onStartPresentation={handleStartPresentation}
+          />
+        );
     }
   };
   

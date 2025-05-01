@@ -195,6 +195,18 @@ button:disabled {
   cursor: not-allowed;
 }
 
+/* Presentation button styles */
+.presentation-button {
+  background-color: #4285f4;
+  color: white;
+  font-weight: 600;
+  margin-left: 8px;
+}
+
+.presentation-button:hover {
+  background-color: #3367d6;
+}
+
 /* Modal styles */
 .modal-overlay {
   position: fixed;

@@ -20,6 +20,7 @@ const Presentation: React.FC = () => {
   
   const { slides, currentSlideIndex, presentationMode, autoPlayMode } = state;
   const [speakingStatus, setSpeakingStatus] = useState(false);
+  const [showHelpPopup, setShowHelpPopup] = useState(true); // Show help popup by default
   const currentSlide = slides[currentSlideIndex];
 
   // Handle keyboard navigation
@@ -130,13 +131,64 @@ const Presentation: React.FC = () => {
           </button>
         </div>
         
-        <button 
-          className="presentation-control-btn exit"
-          onClick={togglePresentationMode}
-        >
-          Exit
-        </button>
+        <div className="presentation-control-buttons">
+          <button 
+            className="presentation-control-btn help"
+            onClick={() => setShowHelpPopup(!showHelpPopup)}
+            title="Show/Hide Help"
+          >
+            ?
+          </button>
+          
+          <button 
+            className="presentation-control-btn exit"
+            onClick={togglePresentationMode}
+          >
+            Exit
+          </button>
+        </div>
       </div>
+      
+      {/* Help Popup */}
+      {showHelpPopup && (
+        <div className="presentation-help-popup">
+          <div className="help-popup-header">
+            <h3>Presentation Controls</h3>
+            <button onClick={() => setShowHelpPopup(false)}>×</button>
+          </div>
+          <div className="help-popup-content">
+            <h4>Keyboard Controls:</h4>
+            <ul>
+              <li><strong>Right Arrow / Space / Page Down:</strong> Next slide</li>
+              <li><strong>Left Arrow / Page Up:</strong> Previous slide</li>
+              <li><strong>P:</strong> Play/pause text-to-speech for current slide</li>
+              <li><strong>A:</strong> Toggle auto-play mode</li>
+              <li><strong>Escape:</strong> Exit presentation</li>
+            </ul>
+            
+            <h4>On-Screen Controls:</h4>
+            <ul>
+              <li><strong>← / →:</strong> Navigate between slides</li>
+              <li><strong>▶/◼:</strong> Play/stop text-to-speech for current slide</li>
+              <li><strong>⟲/⟳:</strong> Toggle auto-play mode</li>
+              <li><strong>?:</strong> Show/hide this help</li>
+              <li><strong>Exit:</strong> Exit presentation mode</li>
+            </ul>
+            
+            <h4>Text-to-Speech Setup:</h4>
+            <p>To use the text-to-speech feature:</p>
+            <ol>
+              <li>Click <strong>Settings</strong> in the main interface</li>
+              <li>Enter your OpenAI API key in the settings modal</li>
+              <li>Click Save to enable high-quality text-to-speech</li>
+            </ol>
+            <p>Without an API key, the presentation will use your browser's built-in speech synthesis (quality may vary).</p>
+            
+            <h4>Auto-Play Mode:</h4>
+            <p>When auto-play is enabled (⟳), each slide will be read aloud, followed by automatic advancement to the next slide.</p>
+          </div>
+        </div>
+      )}
       
       {/* Speaker notes if available */}
       {currentSlide && currentSlide.notes && (
