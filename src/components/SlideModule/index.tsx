@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './styles.css';
-import { useAppContext } from '../../contexts/AppContext';
+// import { useAppContext } from '../../contexts/AppContext'; // No longer needed
 import { SlideProvider, useSlides } from '../../contexts/SlideContext';
 import SlideContent from '../SlideContent';
 import SettingsModal from '../SettingsModal';
@@ -86,7 +86,7 @@ const FileImportHandler: React.FC<{
  * Main component that integrates slide functionality into the app
  */
 const SlideModule: React.FC = () => {
-  const { dispatch } = useAppContext();
+  // const { dispatch } = useAppContext(); // No longer needed after removing buttons
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [isFileImportModalOpen, setIsFileImportModalOpen] = useState(false);
   const [selectedFileContent, setSelectedFileContent] = useState<string | null>(null);
