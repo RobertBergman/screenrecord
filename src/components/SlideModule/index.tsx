@@ -127,22 +127,6 @@ const SlideModule: React.FC = () => {
     setSelectedFileContent(null); // Reset the file content after closing
   };
   
-  const handleStartRecording = () => {
-    // Move to recording controls when ready to record the presentation
-    dispatch({
-      type: 'SET_ACTIVE_PANEL',
-      panel: 'controls',
-    });
-  };
-  
-  const handleBackToSource = () => {
-    // Go back to source selection
-    dispatch({
-      type: 'SET_ACTIVE_PANEL',
-      panel: 'source',
-    });
-  };
-
   return (
     <SlideProvider>
       <div className="slide-module">
@@ -192,21 +176,6 @@ const SlideModule: React.FC = () => {
 
         <div className="slide-module-content">
           <SlideContent />
-        </div>
-
-        <div className="slide-module-footer">
-          <button 
-            className="slide-module-btn back-btn"
-            onClick={handleBackToSource}
-          >
-            Back to Source Selection
-          </button>
-          <button 
-            className="slide-module-btn record-btn"
-            onClick={handleStartRecording}
-          >
-            Record Presentation
-          </button>
         </div>
         
         {/* Settings Modal */}

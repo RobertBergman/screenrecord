@@ -67,41 +67,6 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.slide-module-footer {
-  display: flex;
-  justify-content: space-between;
-  padding: 16px 0;
-  margin-top: 20px;
-}
-
-.slide-module-btn {
-  padding: 10px 20px;
-  border-radius: 4px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.slide-module-btn.back-btn {
-  background-color: #f0f0f0;
-  color: #333;
-  border: 1px solid #ddd;
-}
-
-.slide-module-btn.back-btn:hover {
-  background-color: #e0e0e0;
-}
-
-.slide-module-btn.record-btn {
-  background-color: #4285f4;
-  color: white;
-  border: none;
-}
-
-.slide-module-btn.record-btn:hover {
-  background-color: #3367d6;
-}
-
 /* File Import Modal Styles */
 .modal-overlay {
   position: fixed;
