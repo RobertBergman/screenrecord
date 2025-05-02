@@ -333,10 +333,10 @@ const HomeScreen: React.FC<{
     <>
       <HeroSection>
         <HeroContent>
-          <HeroTitle>Capture and Present with Ease</HeroTitle>
+          <HeroTitle>The Future of Content Creation</HeroTitle>
           <HeroText>
-            All-in-one tool for screen recording and markdown presentations. Perfect for tutorials,
-            demonstrations, lectures, and more - all directly in your browser with no downloads required.
+            PresentFlow is your all-in-one platform for creating dynamic presentations and recordings.
+            Perfect for creators, educators, and professionals who need to communicate ideas effectively.
           </HeroText>
         </HeroContent>
         
@@ -604,10 +604,10 @@ const App: React.FC = () => {
   return (
     <AppContainer>
       <AppHeader>
-        <AppTitle>Screen Recorder & Presenter</AppTitle>
+        <AppTitle>PresentFlow</AppTitle>
         <AppSubtitle>
-          Professional-quality screen recording and markdown presentations right in your browser.
-          Capture your screen or create beautiful presentations with just a few clicks.
+          The future of presentations. Create, narrate, and record professional-quality content all in one place.
+          Seamlessly combine screen recording, markdown slides, and voice narration right in your browser.
         </AppSubtitle>
       </AppHeader>
       
@@ -636,10 +636,10 @@ const App: React.FC = () => {
       
       <Footer>
         <p>
-          Screen Recorder & Presenter &copy; {new Date().getFullYear()} | Privacy-focused, browser-based tools
+          PresentFlow &copy; {new Date().getFullYear()} | The future of presentations
         </p>
         <p style={{ marginTop: '8px', fontSize: '12px' }}>
-          No downloads required. Your data stays on your device. Supporting Chrome, Firefox, and Edge.
+          Create, narrate, record. No downloads required. Your data stays on your device. Supporting Chrome, Firefox, and Edge.
         </p>
       </Footer>
     </AppContainer>
