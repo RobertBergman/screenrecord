@@ -1,4 +1,4 @@
-import { Slide, SlideAction, SlideState, SlideTheme } from '../types/slide';
+import { SlideAction, SlideState, SlideTheme } from '../types/slide';
 
 // Default theme
 const defaultTheme: SlideTheme = {

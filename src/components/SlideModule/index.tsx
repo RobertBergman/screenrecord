@@ -25,19 +25,19 @@ const FileImportHandler: React.FC<{
     }
   }, [isOpen, preloadedContent, importFromMarkdown, onClose]);
   
-  // Handle file selection from file input
-  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const content = e.target?.result as string;
-        importFromMarkdown(content);
-        onClose();
-      };
-      reader.readAsText(file);
-    }
-  };
+  // Handle file selection from file input (handled directly in the input element's onChange)
+  // const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = event.target.files?.[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onload = (e) => {
+  //       const content = e.target?.result as string;
+  //       importFromMarkdown(content);
+  //       onClose();
+  //     };
+  //     reader.readAsText(file);
+  //   }
+  // };
   
   // Handle file drop for drag and drop functionality
   const handleFileDrop = (event: React.DragEvent) => {

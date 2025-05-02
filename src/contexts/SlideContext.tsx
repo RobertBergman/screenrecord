@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useReducer, ReactNode, useMemo, useRef, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Slide, SlideAction, SlideState, SlideTheme } from '../types/slide';
+import { Slide, SlideAction, SlideState } from '../types/slide';
 import { slideReducer, initialSlideState } from '../reducers/slideReducer';
 import { MarkdownParserService } from '../services/MarkdownParserService';
 import TTSService from '../services/TTSService';

@@ -156,7 +156,7 @@ const RecordingControls: React.FC = () => {
   
   // Get combined stream
   const getCombinedStream = useCallback(() => {
-    const { screen, webcam, audio } = state.mediaState.streams;
+    const { screen } = state.mediaState.streams;
     
     if (!screen) {
       throw new Error('No screen stream available. Please go back and capture screen first.');

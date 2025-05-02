@@ -55,6 +55,11 @@ We have enhanced the Screen Recorder application by implementing a new feature t
 - **FileImportHandler**: New component for importing external markdown presentation files
 
 #### Recent Fixes
+- Fixed TypeScript build errors by removing unused imports and variables
+  - Removed unused imports like `HAS_SYSTEM_AUDIO_SUPPORT`, `recordingService`, `QUALITY_PRESETS`, `SlideTheme`, and `Slide`
+  - Fixed unused variable declarations in components (removed unused `state` variable, fixed stream destructuring)
+  - Commented out unused functions like `handleCreateSlides` and `handleFileSelect`
+  - These changes improved code quality and maintainability while fixing TypeScript's strict checking errors
 - Fixed issue where slide editor would disappear when hitting escape after presentation mode
   - Updated slideReducer to properly restore editor mode when exiting presentation mode
 - Added ability to open exported presentations

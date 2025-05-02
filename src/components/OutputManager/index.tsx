@@ -5,9 +5,9 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useAppContext } from '../../contexts/AppContext';
-import { recordingService } from '../../services/RecordingService';
+// import { recordingService } from '../../services/RecordingService';
 import { OutputFormat, QualityPreset } from '../../types';
-import { QUALITY_PRESETS } from '../../constants';
+// import { QUALITY_PRESETS } from '../../constants';
 
 // Styled components
 const OutputContainer = styled.div`

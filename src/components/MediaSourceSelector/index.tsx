@@ -9,7 +9,7 @@ import { MediaDeviceInfo, ScreenCaptureOptions } from '../../types';
 import { screenCaptureService } from '../../services/ScreenCaptureService';
 import { webcamService } from '../../services/WebcamService';
 import { audioCaptureService } from '../../services/AudioCaptureService';
-import { HAS_SYSTEM_AUDIO_SUPPORT } from '../../constants';
+// import { HAS_SYSTEM_AUDIO_SUPPORT } from '../../constants';
 import { handleMediaError, logError } from '../../utils/errorHandling';
 import { browserCapabilities } from '../../utils/featureDetection';
 
@@ -130,7 +130,7 @@ const ErrorMessage = styled.div`
 
 // Component
 const MediaSourceSelector: React.FC = () => {
-  const { state, dispatch } = useAppContext();
+  const { dispatch } = useAppContext();
   const [videoDevices, setVideoDevices] = useState<MediaDeviceInfo[]>([]);
   const [audioDevices, setAudioDevices] = useState<MediaDeviceInfo[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -307,13 +307,13 @@ const MediaSourceSelector: React.FC = () => {
     }
   };
   
-  // Handler for navigating to slide editor
-  const handleCreateSlides = () => {
-    dispatch({
-      type: 'SET_ACTIVE_PANEL',
-      panel: 'slides',
-    });
-  };
+  // Handler for navigating to slide editor (unused)
+  // const handleCreateSlides = () => {
+  //   dispatch({
+  //     type: 'SET_ACTIVE_PANEL',
+  //     panel: 'slides',
+  //   });
+  // };
   
   return (
     <SourceSelectorContainer>
