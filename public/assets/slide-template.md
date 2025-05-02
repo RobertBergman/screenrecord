@@ -75,6 +75,18 @@ Remind audience about the next topic
 
 ---
 
+## Adding Slide Scripts
+
+Add narration scripts that can be read during presentation
+
+<!-- Script:
+This is a script for narration. Scripts are added using HTML comments with the 'Script:' prefix.
+Scripts can be used for narration text that accompanies each slide during recording.
+They appear after the slide content but before the slide separator.
+-->
+
+---
+
 ## Enjoy Creating!
 
 Start building your own beautiful slides now
